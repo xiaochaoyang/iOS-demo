@@ -29,8 +29,8 @@
     [colorArray addObject:[UIColor colorWithRed:196.0/255 green:84.0/255 blue:255.0/255 alpha:1]];
     [colorArray addObject:[UIColor colorWithRed:255.0/255 green:70.0/255 blue:255.0/255 alpha:1]];
     [colorArray addObject:[UIColor colorWithRed:97.0/255 green:60.0/255 blue:255.0/255 alpha:1]];
-    NSArray *rateTitleArray = @[@"",@"38%",@"66%",@"84%",@"90%",@"94%",@"97%",@"99%",@"100%"];
-    NSArray *countArray = @[@38,@28,@18,@6,@4,@3,@2,@1];
+    NSArray *rateTitleArray = @[@"",@"34%",@"58%",@"72%",@"82%",@"88%",@"94%",@"98%",@"100%"];
+    NSArray *countArray = @[@17,@12,@7,@5,@3,@3,@2,@1];
     NSArray *rowTitle = @[@"无规范化培训",@"测量工具不统一",@"宣教不到位",@"工作量大，人力不足",@"操作考核制度不完善",@"对穿刺者不信任",@"无统一标准化流程",@"操作流程不完善"];
     float originX = 40;
     float originY = 60;
@@ -56,7 +56,7 @@
         lastY = CGRectGetMaxY(line.frame);
             UILabel *rightLabel = [[UILabel alloc] init];
             rightLabel.font = [UIFont systemFontOfSize:10];
-            rightLabel.text = [NSString stringWithFormat:@"%.2f%%",(100.0-10*i)];
+            rightLabel.text = [NSString stringWithFormat:@"%.2f%%",(100.0-10*i)*2];
             rightLabel.textAlignment = NSTextAlignmentLeft;
             rightLabel.frame = CGRectMake(CGRectGetMaxX(line.frame)+5, originY+rowHeight*i, 60, scaleTitleFont);
             [self.view addSubview:rightLabel];
@@ -99,8 +99,7 @@
     }
     int count = 0;
     for (float x=0; x<=41*countArray.count-5; x++) {
-//        double y = 0.0365*pow(x/41+1, 5)-0.8855*pow(x/41+1, 4)+7.016*pow(x/41+1, 3)-13.418*pow(x/41+1, 2) -72.856*(x/41+1) +350.17;
-        double y = -0.0065*pow(x/41+1, 6)+0.231*pow(x/41+1, 5)-3.1599*pow(x/41+1, 4)+20.097*pow(x/41+1, 3)-51.652*pow(x/41+1, 2)-20.479*(x/41+1)+328.89;
+        double y = 0.0373*pow(x/41+1, 4)-1.0321*pow(x/41+1, 3)+11.279*pow(x/41+1, 2)-61.985*pow(x/41+1, 1)+321.90;
         UIView *view = [[UIView alloc] init];
         view.backgroundColor = [UIColor redColor];
         view.frame = CGRectMake(x+67,y, 2, 2);
@@ -139,10 +138,10 @@
         }
         
     }
-//    UIImageView *imageView = [[UIImageView alloc] init];
-//    imageView.image = [UIImage imageNamed:@"111.png"];
-//    imageView.frame = CGRectMake(140, 70, 89, 100);
-//    [self.view addSubview:imageView];
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.image = [UIImage imageNamed:@"111.png"];
+    imageView.frame = CGRectMake(170, 70, 89, 100);
+    [self.view addSubview:imageView];
     
 //    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(60, 280, 100, 20)];
 //    [self.view addSubview:label];
