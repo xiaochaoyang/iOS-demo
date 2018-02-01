@@ -29,9 +29,9 @@
     [colorArray addObject:[UIColor colorWithRed:196.0/255 green:84.0/255 blue:255.0/255 alpha:1]];
     [colorArray addObject:[UIColor colorWithRed:255.0/255 green:70.0/255 blue:255.0/255 alpha:1]];
     [colorArray addObject:[UIColor colorWithRed:97.0/255 green:60.0/255 blue:255.0/255 alpha:1]];
-    NSArray *rateTitleArray = @[@"",@"34%",@"58%",@"72%",@"82%",@"88%",@"94%",@"98%",@"100%"];
-    NSArray *countArray = @[@17,@12,@7,@5,@3,@3,@2,@1];
-    NSArray *rowTitle = @[@"无规范化培训",@"测量工具不统一",@"宣教不到位",@"工作量大，人力不足",@"操作考核制度不完善",@"对穿刺者不信任",@"无统一标准化流程",@"操作流程不完善"];
+    NSArray *rateTitleArray = @[@"",@"35.56%",@"62.22%",@"80%",@"88.89%",@"95.56%",@"100%"];
+    NSArray *countArray = @[@16,@12,@8,@4,@3,@2];
+    NSArray *rowTitle = @[@"测量方法的误差",@"穿刺部位选择不正确",@"病人心情紧张",@"穿刺技术不熟练",@"病人静脉血管差",@"其他"];
     float originX = 40;
     float originY = 60;
     UIView *leftLine = [[UIView alloc] init];
@@ -56,7 +56,7 @@
         lastY = CGRectGetMaxY(line.frame);
             UILabel *rightLabel = [[UILabel alloc] init];
             rightLabel.font = [UIFont systemFontOfSize:10];
-            rightLabel.text = [NSString stringWithFormat:@"%.2f%%",(100.0-10*i)*2];
+            rightLabel.text = [NSString stringWithFormat:@"%.2f%%",(100.0-10*i)];
             rightLabel.textAlignment = NSTextAlignmentLeft;
             rightLabel.frame = CGRectMake(CGRectGetMaxX(line.frame)+5, originY+rowHeight*i, 60, scaleTitleFont);
             [self.view addSubview:rightLabel];
@@ -99,7 +99,8 @@
     }
     int count = 0;
     for (float x=0; x<=41*countArray.count-5; x++) {
-        double y = 0.0373*pow(x/41+1, 4)-1.0321*pow(x/41+1, 3)+11.279*pow(x/41+1, 2)-61.985*pow(x/41+1, 1)+321.90;
+//        double y = 0.0373*pow(x/41+1, 4)-1.0321*pow(x/41+1, 3)+11.279*pow(x/41+1, 2)-61.985*pow(x/41+1, 1)+321.90;
+        double y = -0.7278*pow(x/41+1, 3)+15.226*pow(x/41+1, 2)-113.7*(x/41+1)+369.83;
         UIView *view = [[UIView alloc] init];
         view.backgroundColor = [UIColor redColor];
         view.frame = CGRectMake(x+67,y, 2, 2);
@@ -138,20 +139,20 @@
         }
         
     }
-    UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.image = [UIImage imageNamed:@"111.png"];
-    imageView.frame = CGRectMake(170, 70, 89, 100);
-    [self.view addSubview:imageView];
+//    UIImageView *imageView = [[UIImageView alloc] init];
+//    imageView.image = [UIImage imageNamed:@"111.png"];
+//    imageView.frame = CGRectMake(170, 70, 89, 100);
+//    [self.view addSubview:imageView];
     
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(60, 280, 100, 20)];
-//    [self.view addSubview:label];
-//    label.font = [UIFont systemFontOfSize:14];
-//    label.text = @"制表人：刘旗";
-//
-//    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(180, 280, 150, 20)];
-//    [self.view addSubview:label2];
-//    label2.font = [UIFont systemFontOfSize:14];
-//    label2.text = @"制表日期：2017.12.20";
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(80, 410, 100, 20)];
+    [self.view addSubview:label];
+    label.font = [UIFont systemFontOfSize:10];
+    label.text = @"制表人：刘旗";
+
+    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(200, 410, 150, 20)];
+    [self.view addSubview:label2];
+    label2.font = [UIFont systemFontOfSize:10];
+    label2.text = @"制表日期：2017.12.10";
     
 }
 
