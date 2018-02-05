@@ -30,7 +30,7 @@
     [colorArray addObject:[UIColor colorWithRed:255.0/255 green:70.0/255 blue:255.0/255 alpha:1]];
     [colorArray addObject:[UIColor colorWithRed:97.0/255 green:60.0/255 blue:255.0/255 alpha:1]];
     NSArray *rateTitleArray = @[@"",@"38%",@"66%",@"84%",@"90%",@"94%",@"97%",@"99%",@"100%"];
-    NSArray *countArray = @[@38,@28,@18,@6,@4,@3,@2,@1];
+    NSArray *countArray = @[@19,@14,@9,@3,@2,@1.5,@1,@0.5];
     NSArray *rowTitle = @[@"无规范化培训",@"测量工具不统一",@"宣教不到位",@"工作量大，人力不足",@"操作考核制度不完善",@"对穿刺者不信任",@"无统一标准化流程",@"操作流程不完善"];
     float originX = 40;
     float originY = 60;
@@ -43,7 +43,7 @@
     for (int i=0; i<11; i++) {
         UILabel *leftlabel = [[UILabel alloc] init];
         leftlabel.font = [UIFont systemFontOfSize:10];
-        leftlabel.text = [NSString stringWithFormat:@"%d",(10-i)*5];
+        leftlabel.text = [NSString stringWithFormat:@"%d",(10-i)*10];
         leftlabel.frame = CGRectMake(originX, originY+rowHeight*i, 20, scaleTitleFont);
         leftlabel.textAlignment = NSTextAlignmentRight;
         [self.view addSubview:leftlabel];
@@ -80,6 +80,24 @@
     rightLine.frame = CGRectMake(colonumWidth*countArray.count+originX+31, originY+10, 1, rowHeight*10);
     rightLine.backgroundColor = [UIColor grayColor];
     [self.view addSubview:rightLine];
+//    for (int i=0;i<countArray.count;i++) {
+//        NSNumber *count = countArray[i];
+//        UIView *countView = [[UIView alloc] init];
+//        countView.backgroundColor = colorArray[i];
+//        countView.frame = CGRectMake(CGRectGetMaxX(leftLine.frame)+i*(colonumWidth+1), CGRectGetMaxY(leftLine.frame)-rowHeight*(count.floatValue/5), colonumWidth, rowHeight*(count.floatValue/5));
+//        [self.view addSubview:countView];
+//        UILabel *rowTitleLabel = [[UILabel alloc] init];
+//        rowTitleLabel.font = [UIFont systemFontOfSize:12];
+//        rowTitleLabel.textAlignment = NSTextAlignmentLeft;
+//
+//        rowTitleLabel.numberOfLines = 0;
+//        rowTitleLabel.text = rowTitle[i];
+//        CGSize size = [rowTitleLabel.text boundingRectWithSize:CGSizeMake(12, 200) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:rowTitleLabel.font} context:nil].size;
+//        rowTitleLabel.frame = CGRectMake(0, CGRectGetMaxY(countView.frame)+5, 12, size.height);
+//        rowTitleLabel.center = CGPointMake(countView.center.x, rowTitleLabel.center.y);
+//        [self.view addSubview:rowTitleLabel];
+//    }
+    float minX = 0,minY = 0,maxX = 0,maxY = 0;
     for (int i=0;i<countArray.count;i++) {
         NSNumber *count = countArray[i];
         UIView *countView = [[UIView alloc] init];
@@ -96,11 +114,44 @@
         rowTitleLabel.frame = CGRectMake(0, CGRectGetMaxY(countView.frame)+5, 12, size.height);
         rowTitleLabel.center = CGPointMake(countView.center.x, rowTitleLabel.center.y);
         [self.view addSubview:rowTitleLabel];
+        if (i==0) {
+            minX = rowTitleLabel.frame.origin.x;
+            minY = rowTitleLabel.frame.origin.y;
+            maxX = CGRectGetMaxX(rowTitleLabel.frame);
+            maxY = CGRectGetMaxY(rowTitleLabel.frame);
+        } else if (i<3) {
+            float y = CGRectGetMaxY(rowTitleLabel.frame);
+            float x = CGRectGetMaxX(rowTitleLabel.frame);
+            maxY = MAX(y, maxY);
+            maxX = MAX(x, maxX);
+        }
     }
+    
+//    for (int i = minX-5; i<maxX+5; i+=6) {
+//        UIView *view = [[UIView alloc] init];
+//        view.frame  = CGRectMake(i, minY-3, 3, 1);
+//        [self.view addSubview:view];
+//        view.backgroundColor = [UIColor redColor];
+//        UIView *view2 = [[UIView alloc] init];
+//        view2.frame = CGRectMake(i, maxY+5, 3, 1);
+//        [self.view addSubview:view2];
+//        view2.backgroundColor = [UIColor redColor];
+//    }
+//    
+//    for (int i = minY - 3; i<maxY+5; i+=6) {
+//        UIView *view = [[UIView alloc] init];
+//        view.frame = CGRectMake(minX-5, i, 1, 3);
+//        [self.view addSubview:view];
+//        view.backgroundColor = [UIColor redColor];
+//        UIView *view2 = [[UIView alloc] init];
+//        view2.frame = CGRectMake(maxX+5, i, 1, 3);
+//        [self.view addSubview:view2];
+//        view2.backgroundColor = [UIColor redColor];
+//    }
     int count = 0;
     for (float x=0; x<=41*countArray.count-5; x++) {
-//        double y = 0.0365*pow(x/41+1, 5)-0.8855*pow(x/41+1, 4)+7.016*pow(x/41+1, 3)-13.418*pow(x/41+1, 2) -72.856*(x/41+1) +350.17;
-        double y = -0.0065*pow(x/41+1, 6)+0.231*pow(x/41+1, 5)-3.1599*pow(x/41+1, 4)+20.097*pow(x/41+1, 3)-51.652*pow(x/41+1, 2)-20.479*(x/41+1)+328.89;
+        double y = 0.0365*pow(x/41+1, 5)-0.8855*pow(x/41+1, 4)+7.016*pow(x/41+1, 3)-13.418*pow(x/41+1, 2) -72.856*(x/41+1) +350.17;
+//        double y = -0.0065*pow(x/41+1, 6)+0.231*pow(x/41+1, 5)-3.1599*pow(x/41+1, 4)+20.097*pow(x/41+1, 3)-51.652*pow(x/41+1, 2)-20.479*(x/41+1)+328.89;
         UIView *view = [[UIView alloc] init];
         view.backgroundColor = [UIColor redColor];
         view.frame = CGRectMake(x+67,y, 2, 2);
@@ -108,7 +159,11 @@
         if ((int)x%40 ==0 ) {
             UIView *pointView = [[UIView alloc] init];
             pointView.backgroundColor = [UIColor redColor];
-            pointView.frame = CGRectMake(x+66, y-2, 6, 6);
+            if (count ==1) {
+                pointView.frame = CGRectMake(x+64, y-4, 6, 6);
+            } else {
+               pointView.frame = CGRectMake(x+66, y-2, 6, 6);
+            }
             [self.view addSubview:pointView];
             
             UILabel *titleLabel = [[UILabel alloc] init];
@@ -118,24 +173,24 @@
             titleLabel.textAlignment = NSTextAlignmentCenter;
             [self.view addSubview:titleLabel];
             count++;
-            if (count==4) {
-                for (float z=x; z<41*countArray.count; z++) {
-                    UIView *line = [[UIView alloc] init];
-                    line.backgroundColor = [UIColor redColor];
-                    line.frame = CGRectMake(z+70, y, 1, 1);
-                    if ((int)z%2==0) {
-                        [self.view addSubview:line];
-                    }
-                }
-                for (float z=y; z<270; z++) {
-                    UIView *line = [[UIView alloc] init];
-                    line.backgroundColor = [UIColor redColor];
-                    line.frame = CGRectMake(x+70, z, 1, 1);
-                    if ((int)z%2==0) {
-                        [self.view addSubview:line];
-                    }
-                }
-            }
+//            if (count==4) {
+//                for (float z=x; z<41*countArray.count; z++) {
+//                    UIView *line = [[UIView alloc] init];
+//                    line.backgroundColor = [UIColor redColor];
+//                    line.frame = CGRectMake(z+70, y, 1, 1);
+//                    if ((int)z%2==0) {
+//                        [self.view addSubview:line];
+//                    }
+//                }
+//                for (float z=y; z<270; z++) {
+//                    UIView *line = [[UIView alloc] init];
+//                    line.backgroundColor = [UIColor redColor];
+//                    line.frame = CGRectMake(x+70, z, 1, 1);
+//                    if ((int)z%2==0) {
+//                        [self.view addSubview:line];
+//                    }
+//                }
+//            }
         }
         
     }
