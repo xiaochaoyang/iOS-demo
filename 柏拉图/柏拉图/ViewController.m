@@ -43,8 +43,8 @@
     for (int i=0; i<11; i++) {
         UILabel *leftlabel = [[UILabel alloc] init];
         leftlabel.font = [UIFont systemFontOfSize:10];
-        leftlabel.text = [NSString stringWithFormat:@"%d",(10-i)*5];
-        leftlabel.frame = CGRectMake(originX, originY+rowHeight*i, 20, scaleTitleFont);
+        leftlabel.text = [NSString stringWithFormat:@"%.1f",(10-i)*5*0.9];
+        leftlabel.frame = CGRectMake(originX, originY+rowHeight*i, 24, scaleTitleFont);
         leftlabel.textAlignment = NSTextAlignmentRight;
         [self.view addSubview:leftlabel];
         
@@ -80,6 +80,7 @@
     rightLine.frame = CGRectMake(colonumWidth*countArray.count+originX+31, originY+10, 1, rowHeight*10);
     rightLine.backgroundColor = [UIColor grayColor];
     [self.view addSubview:rightLine];
+    float minX = 0,minY = 0,maxX = 0,maxY = 0;
     for (int i=0;i<countArray.count;i++) {
         NSNumber *count = countArray[i];
         UIView *countView = [[UIView alloc] init];
@@ -96,19 +97,62 @@
         rowTitleLabel.frame = CGRectMake(0, CGRectGetMaxY(countView.frame)+5, 12, size.height);
         rowTitleLabel.center = CGPointMake(countView.center.x, rowTitleLabel.center.y);
         [self.view addSubview:rowTitleLabel];
+        if (i==0) {
+            minX = rowTitleLabel.frame.origin.x;
+            minY = rowTitleLabel.frame.origin.y;
+            maxX = CGRectGetMaxX(rowTitleLabel.frame);
+            maxY = CGRectGetMaxY(rowTitleLabel.frame);
+        } else if (i<3) {
+            float y = CGRectGetMaxY(rowTitleLabel.frame);
+            float x = CGRectGetMaxX(rowTitleLabel.frame);
+            maxY = MAX(y, maxY);
+            maxX = MAX(x, maxX);
+        }
     }
+    
+    for (int i = minX-5; i<maxX+5; i+=6) {
+        UIView *view = [[UIView alloc] init];
+        view.frame  = CGRectMake(i, minY-3, 3, 1);
+        [self.view addSubview:view];
+        view.backgroundColor = [UIColor redColor];
+        UIView *view2 = [[UIView alloc] init];
+        view2.frame = CGRectMake(i, maxY+5, 3, 1);
+        [self.view addSubview:view2];
+        view2.backgroundColor = [UIColor redColor];
+    }
+    
+    for (int i = minY - 3; i<maxY+5; i+=6) {
+        UIView *view = [[UIView alloc] init];
+        view.frame = CGRectMake(minX-5, i, 1, 3);
+        [self.view addSubview:view];
+        view.backgroundColor = [UIColor redColor];
+        UIView *view2 = [[UIView alloc] init];
+        view2.frame = CGRectMake(maxX+5, i, 1, 3);
+        [self.view addSubview:view2];
+        view2.backgroundColor = [UIColor redColor];
+    }
+    
     int count = 0;
+    int i=0;
     for (float x=0; x<=41*countArray.count-5; x++) {
 //        double y = 0.0373*pow(x/41+1, 4)-1.0321*pow(x/41+1, 3)+11.279*pow(x/41+1, 2)-61.985*pow(x/41+1, 1)+321.90;
-        double y = -0.7278*pow(x/41+1, 3)+15.226*pow(x/41+1, 2)-113.7*(x/41+1)+369.83;
+//        double y = -0.7278*pow(x/41+1, 3)+15.226*pow(x/41+1, 2)-113.7*(x/41+1)+369.83;
+        double y = 0.0417*pow(x/41+1, 5)-0.939*pow(x/41+1, 4)+7.1553*pow(x/41+1, 3)-14.833*pow(x/41+1, 2)-63.47*(x/41+1)+342;
         UIView *view = [[UIView alloc] init];
         view.backgroundColor = [UIColor redColor];
         view.frame = CGRectMake(x+67,y, 2, 2);
         [self.view addSubview:view];
+//        BOOL first = YES;
+        
         if ((int)x%40 ==0 ) {
             UIView *pointView = [[UIView alloc] init];
             pointView.backgroundColor = [UIColor redColor];
-            pointView.frame = CGRectMake(x+66, y-2, 6, 6);
+            i+=1;
+            if (i==2) {
+                pointView.frame = CGRectMake(x+64, y+1, 6, 6);
+            } else {
+                pointView.frame = CGRectMake(x+66, y-2, 6, 6);
+            }
             [self.view addSubview:pointView];
             
             UILabel *titleLabel = [[UILabel alloc] init];
@@ -144,15 +188,15 @@
 //    imageView.frame = CGRectMake(170, 70, 89, 100);
 //    [self.view addSubview:imageView];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(80, 410, 100, 20)];
-    [self.view addSubview:label];
-    label.font = [UIFont systemFontOfSize:10];
-    label.text = @"制表人：刘旗";
-
-    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(200, 410, 150, 20)];
-    [self.view addSubview:label2];
-    label2.font = [UIFont systemFontOfSize:10];
-    label2.text = @"制表日期：2017.12.10";
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(80, 410, 100, 20)];
+//    [self.view addSubview:label];
+//    label.font = [UIFont systemFontOfSize:10];
+//    label.text = @"制表人：刘旗";
+//
+//    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(200, 410, 150, 20)];
+//    [self.view addSubview:label2];
+//    label2.font = [UIFont systemFontOfSize:10];
+//    label2.text = @"制表日期：2017.12.10";
     
 }
 
